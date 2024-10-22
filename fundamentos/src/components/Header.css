@@ -30,7 +30,7 @@ nav > ul{
 
 li > button{
     background-color: rgb(1, 134, 1);
-    color: white;
+    color: rgb(0, 0, 0);
     border: 1px solid black;
     padding: 4.8px;
 }
