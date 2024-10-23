@@ -23,6 +23,25 @@ const User = () => {
     
         fetchUsers();
       }, []);
+      
+    useEffect(() => {
+      const fetchTicket = async () => {
+        try {
+          const response = await fetch('http://localhost:5000/ticket');
+          if (!response.ok) {
+            throw new Error('Erro ao buscar usuários');
+          }
+          const data = await response.json();
+          setUsers(data.users);
+        } catch (error) {
+          setError(error.message);
+        } finally {
+          setLoading(false);
+        }
+      };
+  
+      fetchTicket();
+    }, []);
     
       if (loading) return <div>Carregando...</div>;
       if (error) return <div>Erro: {error}</div>;
