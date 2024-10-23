@@ -4,10 +4,12 @@ import React,{ useEffect, useState } from 'react'
 import './Main.css'
 
 const Main = () => {
+  const [activeSection, setActiveSection] = useState('');
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [contacts, setContacts] = useState([]);
   const [organizations, setOrganizations] = useState([])
+  const [deals, setDeals] = useState([])
 
   //TOKEN
   useEffect(() => {
@@ -78,7 +80,7 @@ const Main = () => {
   
   // DEAL
   useEffect(() => {
-    fetch('http://localhost:5000/api/organizations', {
+    fetch('http://localhost:5000/api/deals', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -86,12 +88,12 @@ const Main = () => {
     })
       .then(response => {
         if (!response.ok) {
-          throw new Error('Erro ao listar empresas: ' + response.statusText);
+          throw new Error('Erro ao listar negociações: ' + response.statusText);
         }
         return response.json();
       })
       .then(data => {
-        setOrganizations(data.organizations || []); 
+        setDeals(data.deals || []); 
       })
       .catch(error => {
         setError(error);
@@ -113,7 +115,43 @@ const Main = () => {
   return (
     <div>
       <main>
-     
+      <nav>
+        <ul className="menu">
+          <li className="menu-item">
+            <button onClick={() => setActiveSection('departamento')}>DEPARTAMENTO</button>
+          </li>
+          <li className="menu-item">
+            <button onClick={() => setActiveSection('informacoes')}>INFORMAÇÕES</button>
+          </li>
+          <li className="menu-item">
+            <button onClick={() => setActiveSection('configuracoes')}>CONFIGURAÇÕES</button>
+          </li>
+        </ul>
+      </nav>
+      {/* Exibição condicional das seções */}
+      <div className="content">
+        {activeSection === 'departamento' && (
+          <div>
+            <h2>Seção Departamento</h2>
+            <p>financeiro.</p>
+          </div>
+        )}
+
+        {activeSection === 'informacoes' && (
+          <div>
+            <p>NOME: {data.name}</p>
+            <p>EMAIL: {data.email}</p>
+          </div>
+        )}
+
+        {activeSection === 'configuracoes' && (
+          <div>
+            <h2>Seção Configurações</h2>
+            <p>CONFIGURAR TOKEN</p>
+            <input type="text" />
+          </div>
+        )}
+      </div>
       </main>
     </div>
   )
