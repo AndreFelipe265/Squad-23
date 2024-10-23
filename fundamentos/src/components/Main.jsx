@@ -11,6 +11,12 @@ const Main = () => {
   const [organizations, setOrganizations] = useState([])
   const [deals, setDeals] = useState([])
 
+
+  
+
+  
+
+
   //TOKEN
   useEffect(() => {
     fetch('http://localhost:5000/api/token/check', {
@@ -32,6 +38,7 @@ const Main = () => {
       setError(error);
     });
   }, []);
+
 
 
   //CONTATOS
@@ -109,6 +116,8 @@ const Main = () => {
   if (!data) {
     return <div>Carregando...</div>;
   }
+
+  //JETSALES
 
   
   //PROGRAMAÇÃO
