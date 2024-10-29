@@ -2,6 +2,7 @@ import React,{ useEffect, useState } from 'react'
 
 const User = () => {
     const [users, setUsers] = useState([]);
+    const [ticket, setTicket] = useState([])
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -32,7 +33,7 @@ const User = () => {
             throw new Error('Erro ao buscar usuários');
           }
           const data = await response.json();
-          setUsers(data.users);
+          setTicket(data.ticket);
         } catch (error) {
           setError(error.message);
         } finally {
