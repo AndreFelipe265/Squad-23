@@ -4,6 +4,8 @@ import React,{ useEffect, useState } from 'react'
 import './Main.css'
 
 const Main = () => {
+  const [activeSection, setActiveSection] = useState('');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false); 
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [contacts, setContacts] = useState([]);
@@ -11,6 +13,10 @@ const Main = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [ticket,setTicket] = useState([]);
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen((prev) => !prev);
+  };
 
   //JETSALES
   
@@ -158,9 +164,65 @@ const Main = () => {
   //PROGRAMAÇÃO
   return (
     <div>
-      <main>
-     
-      </main>
+    <nav>
+    <ul className="menu">
+      <li className="menu-item">
+        <button onClick={toggleDropdown}>INFORMAÇÕES</button>
+        {isDropdownOpen && ( // Exibe o dropdown se estiver aberto
+          <ul className="dropdown">
+            <li onClick={() => { setActiveSection('financeiro'); setIsDropdownOpen(false); }}>Financeiro</li>
+            <li onClick={() => { setActiveSection('vendas'); setIsDropdownOpen(false); }}>Vendas</li>
+            <li onClick={() => { setActiveSection('marketing'); setIsDropdownOpen(false); }}>Marketing</li>
+          </ul>
+        )}
+      </li>
+      <li className="menu-item">
+        <button onClick={() => { setActiveSection('informacoes'); setIsDropdownOpen(false); }}>INFORMAÇÕES</button>
+      </li>
+      <li className="menu-item">
+        <button onClick={() => { setActiveSection('token'); setIsDropdownOpen(false); }}>TOKEN</button>
+      </li>
+    </ul>
+  </nav>
+
+  {/* Exibição condicional das seções */}
+  <div className="content">
+    {activeSection === 'financeiro' && (
+      <div>
+        <h2>Seção Financeiro</h2>
+        <p>Informações financeiras.</p>
+      </div>
+    )}
+
+    {activeSection === 'vendas' && (
+      <div>
+        <h2>Seção Vendas</h2>
+        <p>Informações sobre vendas.</p>
+      </div>
+    )}
+
+    {activeSection === 'marketing' && (
+      <div>
+        <h2>Seção Marketing</h2>
+        <p>Estratégias de marketing.</p>
+      </div>
+    )}
+
+    {activeSection === 'informacoes' && (
+      <div>
+        <h2>Seção Informações</h2>
+        <p>nossa que informacoes</p>
+      </div>
+    )}
+
+    {activeSection === 'Token' && (
+      <div>
+        <h1>CONFIGURAR O TOKEN</h1>
+        <input type="text" placeholder='Digite seu token aqui' />
+        <input type="submit" value="Verificar" />
+      </div>
+    )}
+  </div>
     </div>
   )
 }
