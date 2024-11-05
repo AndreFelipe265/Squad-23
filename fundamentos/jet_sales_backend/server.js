@@ -6,7 +6,8 @@ require("dotenv").config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-const url = 'https://crm.rdstation.com/api/v1/token/check?token=6709bdde82747300196dadec';
+const url =
+	"https://crm.rdstation.com/api/v1/token/check?token=6709bdde82747300196dadec";
 
 app.use(cors());
 
@@ -35,19 +36,21 @@ app.get("/api/token/check", (req, res) => {
 	fetchData(url, res);
 });
 
-
+// Endpoint Contatos
 app.get("/api/contacts", (req, res) => {
 	const url =
 		"https://crm.rdstation.com/api/v1/contacts?token=6709bdde82747300196dadec";
 	fetchData(url, res);
 });
 
+// Endpoint Organizations
 app.get("/api/organizations", (req, res) => {
 	const url =
 		"https://crm.rdstation.com/api/v1/organizations?token=6709bdde82747300196dadec";
 	fetchData(url, res);
 });
 
+// Porta que está rodando
 app.listen(PORT, () => {
 	console.log(`Servidor rodando na porta ${PORT}`);
 });
