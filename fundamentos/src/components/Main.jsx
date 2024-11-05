@@ -170,6 +170,7 @@ const Main = () => {
         <button onClick={toggleDropdown}>INFORMAÇÕES</button>
         {isDropdownOpen && ( // Exibe o dropdown se estiver aberto
           <ul className="dropdown">
+            <li onClick={() => {setActiveSection('usuario'); setIsDropdownOpen(false); }}>Usuario</li>
             <li onClick={() => { setActiveSection('financeiro'); setIsDropdownOpen(false); }}>Financeiro</li>
             <li onClick={() => { setActiveSection('vendas'); setIsDropdownOpen(false); }}>Vendas</li>
             <li onClick={() => { setActiveSection('marketing'); setIsDropdownOpen(false); }}>Marketing</li>
@@ -187,6 +188,14 @@ const Main = () => {
 
   {/* Exibição condicional das seções */}
   <div className="content">
+    
+  {activeSection === 'usuario' && (
+      <div>
+        
+      </div>
+    )}
+
+
     {activeSection === 'financeiro' && (
       <div>
         <h2>Seção Financeiro</h2>
@@ -215,8 +224,8 @@ const Main = () => {
       </div>
     )}
 
-    {activeSection === 'Token' && (
-      <div>
+    {activeSection === 'token' && (
+      <div className='configurar_token'>
         <h1>CONFIGURAR O TOKEN</h1>
         <input type="text" placeholder='Digite seu token aqui' />
         <input type="submit" value="Verificar" />
