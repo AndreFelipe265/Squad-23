@@ -50,6 +50,24 @@ app.get("/api/organizations", (req, res) => {
 	fetchData(url, res);
 });
 
+app.get("/api/deals", (req, res) => {
+	const url =
+		"https://crm.rdstation.com/api/v1/deals?token=6709bdde82747300196dadec";
+	fetchData(url, res);
+});
+
+app.get("/api/products", (req, res) => {
+	const url =
+		"https://crm.rdstation.com/api/v1/products?token=6709bdde82747300196dadec";
+	fetchData(url, res);
+});
+
+app.get("/api/custom_fields", (req, res) => {
+	const url =
+		"https://crm.rdstation.com/api/v1/custom_fields?token=6709bdde82747300196dadec";
+	fetchData(url, res);
+});
+
 // Porta que está rodando
 app.listen(PORT, () => {
 	console.log(`Servidor rodando na porta ${PORT}`);
