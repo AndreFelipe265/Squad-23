@@ -8,6 +8,52 @@ const Main = () => {
   const [error, setError] = useState(null);
   const [contacts, setContacts] = useState([]);
   const [organizations, setOrganizations] = useState([])
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [ticket,setTicket] = useState([]);
+
+  //JETSALES
+  
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/users');
+        if (!response.ok) {
+          throw new Error('Erro ao buscar usuários');
+        }
+        const data = await response.json();
+        setUsers(data.users);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+
+  useEffect(() => {
+    const fetchTicket = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/ticket');
+        if (!response.ok) {
+          throw new Error('Erro ao buscar usuários');
+        }
+        const data = await response.json();
+        setTicket(data.ticket);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTicket();
+  }, []);
+
+
 
   //TOKEN
   useEffect(() => {

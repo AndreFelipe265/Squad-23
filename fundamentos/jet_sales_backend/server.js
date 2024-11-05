@@ -12,6 +12,52 @@ const urlEMPRESA = 'https://crm.rdstation.com/api/v1/organizations?token=6709bdd
 
 app.use(cors());
 
+//JETSAES
+
+
+app.get('/users',async (req, res)=>{
+  try {
+    const response = await fetch("https://chatapi.jetsalesbrasil.com/users/?pageNumber=1&hasMore=true", {
+      headers: {
+        "accept": "application/json, text/plain, */*",
+        "authorization": `Bearer ${process.env.JETSALES_TOKEN}` 
+      },
+      method: "GET"
+    });
+    const data = await response.json()
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao buscar dados da API da JETSALES' });
+  }
+  
+  
+});
+
+
+app.get('/ticket',async (req, res)=>{
+  try {
+    const response = await fetch(`https://chatapi.jetsalesbrasil.com/tickets/${process.env.JETSALES_ID}?id=${process.env.JETSALES_ID}`, {
+      headers: {
+        "accept": "application/json, text/plain, */*",
+        "authorization": `Bearer ${process.env.JETSALES_TOKEN}` 
+      },
+      method: "GET"
+    });
+    const data = await response.json()
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao buscar dados da API da JETSALES' });
+  }
+  
+  
+});
+
+
+
+
+
+
+
 //TOKEN
 app.get('/api/token/check', async (req, res) => {
   try {
