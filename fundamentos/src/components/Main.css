@@ -14,8 +14,16 @@ main{
 
 main > h1{
     font-size: 16px;
-
 }
+
+h1{
+    color: white;
+} 
+
+p{
+    color: white;
+}
+
 
 .dropdown {  
     display: none; /* Oculta o dropdown por padrão */  
@@ -45,3 +53,81 @@ li:hover .dropdown {
     background-color: rgba(0, 0, 0, 0.1); /* Efeito de hover para os itens do dropdown */  
 
 }
+
+.menu {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Espaçamento entre os botões */
+}
+
+.menu-item {
+    flex: 1; /* Faz com que cada botão ocupe igualmente o espaço disponível */
+    
+}
+
+.menu-item > button{
+    font-weight: bold;
+}
+
+.menu-item button {
+    width: 100%; /* Faz o botão ocupar toda a largura do item */
+    padding: 10px;
+    background: linear-gradient(to bottom, #51C077, #35e378);
+    color: white;
+    border: 1px;
+    border-radius: 5%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.menu-item button:hover {
+    background-color: #555;
+}
+
+.configurar_token {
+    width: 250px; /* Largura ajustada para a caixa */
+    padding: 30px; /* Padding para espaçamento interno */
+    margin: 0 auto;
+    margin-top: 10%; /* Centraliza verticalmente */
+    background: #333;
+    border-radius: 8px;
+    text-align: center;
+    color: white;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.configurar_token h1 {
+    margin-bottom: 15px; /* Menos espaçamento abaixo do título */
+    font-size: 18px; /* Tamanho de fonte ajustado */
+    color: #ffffff;
+}
+
+.configurar_token input[type="text"] {
+    width: 100%; /* Largura completa */
+    padding: 10px; /* Maior padding para o campo de entrada */
+    margin-bottom: 20px; /* Mais espaçamento abaixo do campo de entrada */
+    background: #444;
+    color: white;
+    border: none;
+    outline: none;
+    border-radius: 4px;
+    font-size: 14px; /* Tamanho de fonte ajustado */
+}
+
+.configurar_token input[type="submit"] {
+    width: 100%; /* Largura completa */
+    padding: 10px; /* Maior padding para o botão */
+    background: linear-gradient(to right, #51C077, #35e378); /* Gradiente no botão */
+    border: none;
+    color: white;
+    font-size: 14px; /* Tamanho da fonte ajustado */
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.3s;
+}
+
+.configurar_token input[type="submit"]:hover {
+    background: #369b78; /* Cor do botão no hover */
+}
+
+  

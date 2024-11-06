@@ -178,9 +178,6 @@ const Main = () => {
         )}
       </li>
       <li className="menu-item">
-        <button onClick={() => { setActiveSection('informacoes'); setIsDropdownOpen(false); }}>INFORMAÇÕES</button>
-      </li>
-      <li className="menu-item">
         <button onClick={() => { setActiveSection('token'); setIsDropdownOpen(false); }}>TOKEN</button>
       </li>
     </ul>
@@ -193,35 +190,45 @@ const Main = () => {
       <div>
         <h1>INFORMAÇÕES DO CLIENTE</h1>
         <p>NOME: {data.name}</p>
+        <br />
+        <hr />
       </div>
     )}
 
 
     {activeSection === 'financeiro' && (
       <div>
-        <h2>Seção Financeiro</h2>
+        <h1>Seção Financeiro</h1>
         <p>Informações financeiras.</p>
+        <br />
+        <hr />
       </div>
     )}
 
     {activeSection === 'vendas' && (
       <div>
-        <h2>Seção Vendas</h2>
+        <h1>Seção Vendas</h1>
         <p>Informações sobre vendas.</p>
+        <br />
+        <hr />
       </div>
     )}
   
     {activeSection === 'marketing' && (
       <div>
-        <h2>Seção Marketing</h2>
+        <h1>Seção Marketing</h1>
         <p>Estratégias de marketing.</p>
+        <br />
+        <hr />
       </div>
     )}
 
     {activeSection === 'informacoes' && (
       <div>
-        <h2>Seção Informações</h2>
+        <h1>Seção Informações</h1>
         <p>nossa que informacoes</p>
+        <br />
+        <hr />
       </div>
     )}
 
