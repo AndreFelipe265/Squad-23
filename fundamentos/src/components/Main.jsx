@@ -1,7 +1,5 @@
-import React,{ useEffect, useState } from 'react'
-
-//css
-import './Main.css'
+import React, { useEffect, useState } from 'react';
+import './Main.css';
 
 const Main = () => {
   const [activeSection, setActiveSection] = useState('');
@@ -9,17 +7,29 @@ const Main = () => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [contacts, setContacts] = useState([]);
-  const [organizations, setOrganizations] = useState([])
+  const [organizations, setOrganizations] = useState([]);
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [ticket,setTicket] = useState([]);
+  const [ticket, setTicket] = useState([]);
+  const [showInfo, setShowInfo] = useState({
+    usuario: false,
+    financeiro: false,
+    vendas: false,
+    marketing: false,
+  }); // Novo estado para controle dos checkboxes de cada seção
 
   const toggleDropdown = () => {
     setIsDropdownOpen((prev) => !prev);
   };
 
+  const handleCheckboxChange = (section) => {
+    setShowInfo((prev) => ({
+      ...prev,
+      [section]: !prev[section]
+    }));
+  };
+
   //JETSALES
-  
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -39,7 +49,6 @@ const Main = () => {
     fetchUsers();
   }, []);
 
-
   useEffect(() => {
     const fetchTicket = async () => {
       try {
@@ -58,8 +67,6 @@ const Main = () => {
 
     fetchTicket();
   }, []);
-
-
 
   //TOKEN
   useEffect(() => {
@@ -82,7 +89,6 @@ const Main = () => {
       setError(error);
     });
   }, []);
-
 
   //CONTATOS
   useEffect(() => {
@@ -127,31 +133,8 @@ const Main = () => {
         setError(error);
       });
   }, []);
-  
-  // DEAL
-  useEffect(() => {
-    fetch('http://localhost:5000/api/organizations', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Erro ao listar empresas: ' + response.statusText);
-        }
-        return response.json();
-      })
-      .then(data => {
-        setOrganizations(data.organizations || []); 
-      })
-      .catch(error => {
-        setError(error);
-      });
-  }, []);
 
-
-//CONDIÇÃO DE ERRO
+  //CONDIÇÃO DE ERRO
   if (error) {
     return <div>Erro: {error.message}</div>;
   }
@@ -160,82 +143,88 @@ const Main = () => {
     return <div>Carregando...</div>;
   }
 
-  
   //PROGRAMAÇÃO
   return (
     <div>
-    <nav>
-    <ul className="menu">
-      <li className="menu-item">
-        <button onClick={toggleDropdown}>INFORMAÇÕES</button>
-        {isDropdownOpen && ( // Exibe o dropdown se estiver aberto
-          <ul className="dropdown">
-            <li onClick={() => {setActiveSection('usuario'); setIsDropdownOpen(false); }}>Usuario</li>
-            <li onClick={() => { setActiveSection('financeiro'); setIsDropdownOpen(false); }}>Financeiro</li>
-            <li onClick={() => { setActiveSection('vendas'); setIsDropdownOpen(false); }}>Vendas</li>
-            <li onClick={() => { setActiveSection('marketing'); setIsDropdownOpen(false); }}>Marketing</li>
-          </ul>
+      <nav>
+        <ul className="menu">
+          <li className="menu-item">
+            <button onClick={toggleDropdown}>INFORMAÇÕES</button>
+            {isDropdownOpen && (
+              <ul className="dropdown">
+                <li>
+                  <label>
+                    <input type="checkbox" checked={showInfo.usuario} onChange={() => handleCheckboxChange('usuario')} />
+                    Usuário
+                  </label>
+                </li>
+                <li>
+                  <label>
+                    <input type="checkbox" checked={showInfo.financeiro} onChange={() => handleCheckboxChange('financeiro')} />
+                    Financeiro
+                  </label>
+                </li>
+                <li>
+                  <label>
+                    <input type="checkbox" checked={showInfo.vendas} onChange={() => handleCheckboxChange('vendas')} />
+                    Vendas
+                  </label>
+                </li>
+                <li>
+                  <label>
+                    <input type="checkbox" checked={showInfo.marketing} onChange={() => handleCheckboxChange('marketing')} />
+                    Marketing
+                  </label>
+                </li>
+              </ul>
+            )}
+          </li>
+          <li className="menu-item">
+            <button onClick={() => { setActiveSection('token'); setIsDropdownOpen(false); }}>TOKEN</button>
+          </li>
+        </ul>
+      </nav>
+
+      {/* Exibição condicional das seções */}
+      <div className="content">
+        {showInfo.usuario && (
+          <div>
+            <h1>INFORMAÇÕES DO CLIENTE</h1>
+            <p>NOME: {data.name}</p>
+          </div>
         )}
-      </li>
-      <li className="menu-item">
-        <button onClick={() => { setActiveSection('informacoes'); setIsDropdownOpen(false); }}>INFORMAÇÕES</button>
-      </li>
-      <li className="menu-item">
-        <button onClick={() => { setActiveSection('token'); setIsDropdownOpen(false); }}>TOKEN</button>
-      </li>
-    </ul>
-  </nav>
 
-  {/* Exibição condicional das seções */}
-  <div className="content">
-    
-  {activeSection === 'usuario' && (
-      <div>
-        <h1>INFORMAÇÕES DO CLIENTE</h1>
-        <p>NOME: {data.name}</p>
-      </div>
-    )}
+        {showInfo.financeiro && (
+          <div>
+            <h2>Seção Financeiro</h2>
+            <p>Informações financeiras.</p>
+          </div>
+        )}
 
+        {showInfo.vendas && (
+          <div>
+            <h2>Seção Vendas</h2>
+            <p>Informações sobre vendas.</p>
+          </div>
+        )}
 
-    {activeSection === 'financeiro' && (
-      <div>
-        <h2>Seção Financeiro</h2>
-        <p>Informações financeiras.</p>
-      </div>
-    )}
+        {showInfo.marketing && (
+          <div>
+            <h2>Seção Marketing</h2>
+            <p>Estratégias de marketing.</p>
+          </div>
+        )}
 
-    {activeSection === 'vendas' && (
-      <div>
-        <h2>Seção Vendas</h2>
-        <p>Informações sobre vendas.</p>
+        {activeSection === 'token' && (
+          <div className="configurar_token">
+            <h1>CONFIGURAR O TOKEN</h1>
+            <input type="text" placeholder="Digite seu token aqui" />
+            <input type="submit" value="Verificar" />
+          </div>
+        )}
       </div>
-    )}
-  
-    {activeSection === 'marketing' && (
-      <div>
-        <h2>Seção Marketing</h2>
-        <p>Estratégias de marketing.</p>
-        6
-      </div>
-    )}
-
-    {activeSection === 'informacoes' && (
-      <div>
-        <h2>Seção Informações</h2>
-        <p>nossa que informacoes</p>
-      </div>
-    )}
-
-    {activeSection === 'token' && (
-      <div className='configurar_token'>
-        <h1>CONFIGURAR O TOKEN</h1>
-        <input type="text" placeholder='Digite seu token aqui' />
-        <input type="submit" value="Verificar" />
-      </div>
-    )}
-  </div>
     </div>
-  )
-}
+  );
+};
 
-export default Main
+export default Main;
