@@ -57,7 +57,36 @@ function Main() {
 	// Retorna a parte do frontend
 	return (
 		<div>
-			<main></main>
+			<main>
+				{/* Teste para mostrar os dados de cada endpoint */}
+				<h1>Dados dos Endpoints</h1>
+				<div>
+					{Object.keys(data).map((key) => (
+						<div key={key}>
+							<h2>{key}</h2>
+							{Array.isArray(data[key]) ? (
+								data[key].length > 0 ? (
+									<ul>
+										{data[key].map((item, index) => (
+											<li key={index}>
+												{JSON.stringify(item)}
+											</li>
+										))}
+									</ul>
+								) : (
+									<p>Nenhum dado disponível.</p>
+								)
+							) : (
+								<p>
+									{data[key]
+										? JSON.stringify(data[key])
+										: "Nenhum dado disponível."}
+								</p>
+							)}
+						</div>
+					))}
+				</div>
+			</main>
 		</div>
 	);
 }
