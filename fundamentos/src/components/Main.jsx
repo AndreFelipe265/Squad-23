@@ -215,6 +215,7 @@ const Main = () => {
       <div>
         <h2>Seção Marketing</h2>
         <p>Estratégias de marketing.</p>
+        6
       </div>
     )}
 
