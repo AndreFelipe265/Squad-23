@@ -191,7 +191,8 @@ const Main = () => {
     
   {activeSection === 'usuario' && (
       <div>
-        
+        <h1>INFORMAÇÕES DO CLIENTE</h1>
+        <p>NOME: {data.name}</p>
       </div>
     )}
 
@@ -209,7 +210,7 @@ const Main = () => {
         <p>Informações sobre vendas.</p>
       </div>
     )}
-
+  
     {activeSection === 'marketing' && (
       <div>
         <h2>Seção Marketing</h2>
