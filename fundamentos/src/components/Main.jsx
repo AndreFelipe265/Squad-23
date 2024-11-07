@@ -13,9 +13,9 @@ const Main = () => {
   const [ticket, setTicket] = useState([]);
   const [showInfo, setShowInfo] = useState({
     usuario: false,
-    financeiro: false,
-    vendas: false,
-    marketing: false,
+    contatos: false,
+    empresa: false,
+    negociação: false,
   }); // Novo estado para controle dos checkboxes de cada seção
 
   const toggleDropdown = () => {
@@ -143,6 +143,7 @@ const Main = () => {
     return <div>Carregando...</div>;
   }
 
+
   //PROGRAMAÇÃO
   return (
     <div>
@@ -160,20 +161,20 @@ const Main = () => {
                 </li>
                 <li>
                   <label>
-                    <input type="checkbox" checked={showInfo.financeiro} onChange={() => handleCheckboxChange('financeiro')} />
-                    Financeiro
+                    <input type="checkbox" checked={showInfo.contatos} onChange={() => handleCheckboxChange('contatos')} />
+                    Contatos
                   </label>
                 </li>
                 <li>
                   <label>
-                    <input type="checkbox" checked={showInfo.vendas} onChange={() => handleCheckboxChange('vendas')} />
-                    Vendas
+                    <input type="checkbox" checked={showInfo.empresa} onChange={() => handleCheckboxChange('empresa')} />
+                    Empresa
                   </label>
                 </li>
                 <li>
                   <label>
-                    <input type="checkbox" checked={showInfo.marketing} onChange={() => handleCheckboxChange('marketing')} />
-                    Marketing
+                    <input type="checkbox" checked={showInfo.negociação} onChange={() => handleCheckboxChange('negociação')} />
+                    Negociação
                   </label>
                 </li>
               </ul>
@@ -189,29 +190,41 @@ const Main = () => {
       <div className="content">
         {showInfo.usuario && (
           <div>
-            <h1>INFORMAÇÕES DO CLIENTE</h1>
-            <p>NOME: {data.name}</p>
+            <h2>INFORMAÇÕES DO CLIENTE</h2>
+            <p>NOME: </p>
+            <p>TELEFONE:</p>
+            <p>ID: </p>
+            <p>EMAIL: </p>
+            <br />
+            <hr />
           </div>
         )}
 
-        {showInfo.financeiro && (
+        {showInfo.contatos && (
           <div>
-            <h2>Seção Financeiro</h2>
-            <p>Informações financeiras.</p>
+            <h2>INFORMAÇÕES DE CONTATOS</h2>
+            <p></p>
+            <br />
+            <hr />
+
           </div>
         )}
 
-        {showInfo.vendas && (
+        {showInfo.empresa && (
           <div>
-            <h2>Seção Vendas</h2>
-            <p>Informações sobre vendas.</p>
+            <h2>INFORMAÇÕES DE EMPRESA</h2>
+            <p></p>
+            <br />
+            <hr />
           </div>
         )}
 
-        {showInfo.marketing && (
+        {showInfo.negociação && (
           <div>
-            <h2>Seção Marketing</h2>
-            <p>Estratégias de marketing.</p>
+            <h2>INFORMAÇÕES DE NEGOCIAÇÃO</h2>
+            <p></p>
+            <br />
+            <hr />
           </div>
         )}
 

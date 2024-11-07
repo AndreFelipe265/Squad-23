@@ -15,7 +15,6 @@ app.use(cors());
 
 //JETSAES
 
-
 app.get('/users',async (req, res)=>{
   try {
     const response = await fetch("https://chatapi.jetsalesbrasil.com/users/?pageNumber=1&hasMore=true", {
