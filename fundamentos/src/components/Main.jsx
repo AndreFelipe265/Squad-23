@@ -149,7 +149,7 @@ const Main = () => {
       <nav>
         <ul className="menu">
           <li className="menu-item">
-            <button onClick={toggleDropdown}>INFORMAÇÕES</button>
+            <button className="hover-botões" onClick={toggleDropdown}>INFORMAÇÕES</button>
             {isDropdownOpen && (
               <ul className="dropdown">
                 <li>
@@ -180,7 +180,7 @@ const Main = () => {
             )}
           </li>
           <li className="menu-item">
-            <button onClick={() => { setActiveSection('token'); setIsDropdownOpen(false); }}>TOKEN</button>
+            <button className="hover-botões" onClick={() => { setActiveSection('token'); setIsDropdownOpen(false); }}>TOKEN</button>
           </li>
         </ul>
       </nav>
@@ -188,30 +188,30 @@ const Main = () => {
       {/* Exibição condicional das seções */}
       <div className="content">
         {showInfo.usuario && (
-          <div>
-            <h1>INFORMAÇÕES DO CLIENTE</h1>
-            <p>NOME: {data.name}</p>
+          <div className='seções'>
+            <h2>INFORMAÇÕES DO CLIENTE</h2>
+            <p className='Informações'>NOME: {data.name}</p>
           </div>
         )}
 
         {showInfo.financeiro && (
-          <div>
-            <h2>Seção Financeiro</h2>
-            <p>Informações financeiras.</p>
+          <div className='seções'>
+            <h2>SEÇÃO FINANCEIRO</h2>
+            <p className='Informações'>Informações financeiras.</p>
           </div>
         )}
 
         {showInfo.vendas && (
-          <div>
-            <h2>Seção Vendas</h2>
-            <p>Informações sobre vendas.</p>
+          <div className='seções'>
+            <h2>SEÇÃO VENDAS</h2>
+            <p className='Informações'>Informações sobre vendas.</p>
           </div>
         )}
 
         {showInfo.marketing && (
-          <div>
-            <h2>Seção Marketing</h2>
-            <p>Estratégias de marketing.</p>
+          <div className='seções'>
+            <h2>SEÇÃO MARKETING</h2>
+            <p className='Informações'>Estratégias de marketing.</p>
           </div>
         )}
 
