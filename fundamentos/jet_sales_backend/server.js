@@ -12,9 +12,16 @@ const urlEMPRESA = 'https://crm.rdstation.com/api/v1/organizations?token=6709bdd
 const urlNEGOCIAÇÃO = 'https://crm.rdstation.com/api/v1/deals?token=6709bdde82747300196dadec'
 
 app.use(cors());
+app.use((req, res, next) => {
+  const token = req.headers['authorization'];
+  if (token) {
+    req.token = token.replace('Bearer ', ''); // Remove "Bearer" para obter apenas o token
+  }
+  next();
+});
+
 
 //JETSAES
-
 app.get('/users',async (req, res)=>{
   try {
     const response = await fetch("https://chatapi.jetsalesbrasil.com/users/?pageNumber=1&hasMore=true", {
@@ -29,8 +36,6 @@ app.get('/users',async (req, res)=>{
   } catch (error) {
     res.status(500).json({ error: 'Erro ao buscar dados da API da JETSALES' });
   }
-  
-  
 });
 
 
@@ -48,27 +53,17 @@ app.get('/ticket',async (req, res)=>{
   } catch (error) {
     res.status(500).json({ error: 'Erro ao buscar dados da API da JETSALES' });
   }
-  
-  
 });
-
-
-
-
-
-
 
 //TOKEN
 app.get('/api/token/check', async (req, res) => {
   try {
     const response = await axios.get(urlTOKEN, {
       headers: {
-        'Authorization': `Bearer ${process.env.RD_TOKEN}`,
+        'Authorization': `Bearer ${req.token}`,
         'Content-Type': 'application/json',
       }
     });
-
- 
     res.json(response.data);
   } catch (error) {
     console.error('Erro ao fazer a requisição:', error.message);
@@ -81,7 +76,7 @@ app.get('/api/contacts', async (req, res) => {
   try {
     const response = await axios.get(urlCONTATOS, {
       headers: {
-        'Authorization': `Bearer ${process.env.RD_TOKEN}`,
+        'Authorization': `Bearer ${req.token}`,
         'Content-Type': 'application/json',
       }
     });
@@ -100,7 +95,7 @@ app.get('/api/organizations', async (req, res) => {
   try {
     const response = await axios.get(urlEMPRESA, {
       headers: {
-        'Authorization': `Bearer ${process.env.RD_TOKEN}`,
+        'Authorization': `Bearer ${req.token}`,
         'Content-Type': 'application/json',
       }
     });
@@ -121,9 +116,9 @@ app.listen(PORT, () => {
 
 app.get('/api/deals', async (req, res) => {
   try {
-    const response = await axios.get(urlTOKEN, {
+    const response = await axios.get(urlNEGOCIAÇÃO, {
       headers: {
-        'Authorization': `Bearer ${process.env.RD_TOKEN}`,
+        'Authorization': `Bearer ${req.token}`,
         'Content-Type': 'application/json',
       }
     });

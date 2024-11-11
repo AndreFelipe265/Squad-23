@@ -114,7 +114,7 @@ li:hover .dropdown {
     font-size: 14px; /* Tamanho de fonte ajustado */
 }
 
-.configurar_token input[type="submit"] {
+.configurar_token button {
     width: 100%; /* Largura completa */
     padding: 10px; /* Maior padding para o botão */
     background: linear-gradient(to right, #51C077, #35e378); /* Gradiente no botão */

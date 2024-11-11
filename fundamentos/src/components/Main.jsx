@@ -11,6 +11,7 @@ const Main = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [ticket, setTicket] = useState([]);
+  const [token, setToken] = useState(localStorage.getItem('token') || '');
   const [showInfo, setShowInfo] = useState({
     usuario: false,
     contatos: false,
@@ -27,6 +28,12 @@ const Main = () => {
       ...prev,
       [section]: !prev[section]
     }));
+  };
+
+  // Salvar Token no localStorage
+  const handleTokenSubmit = () => {
+    localStorage.setItem('token', token);
+    alert('Token salvo com sucesso!');
   };
 
   //JETSALES
@@ -70,10 +77,12 @@ const Main = () => {
 
   //TOKEN
   useEffect(() => {
+    const token = localStorage.getItem('token');
     fetch('http://localhost:5000/api/token/check', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
       }
     })
     .then(response => {
@@ -191,7 +200,7 @@ const Main = () => {
         {showInfo.usuario && (
           <div>
             <h2>INFORMAÇÕES DO CLIENTE</h2>
-            <p>NOME: </p>
+            <p>NOME: {data.name}</p>
             <p>TELEFONE:</p>
             <p>ID: </p>
             <p>EMAIL: </p>
@@ -231,8 +240,8 @@ const Main = () => {
         {activeSection === 'token' && (
           <div className="configurar_token">
             <h1>CONFIGURAR O TOKEN</h1>
-            <input type="text" placeholder="Digite seu token aqui" />
-            <input type="submit" value="Verificar" />
+            <input type="text" placeholder="Digite seu token aqui" value={token} onChange={(e) => setToken(e.target.value)} />
+            <button onClick={handleTokenSubmit}>Verificar</button>
           </div>
         )}
       </div>
