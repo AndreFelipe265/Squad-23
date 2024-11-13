@@ -20,7 +20,7 @@
 	},
 	"content_scripts": [
 		{
-			"matches": ["https://chat.jetsalesbrasil.com/"],
+			"matches": ["https://chat.jetsalesbrasil.com/*"],
 			"js": ["contentScript.js"]
 		}
 	]

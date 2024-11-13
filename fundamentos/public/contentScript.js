@@ -1,7 +1,14 @@
-// Selecione o elemento do click..
-const objeto = document.querySelector("#ListItemsTicket");
-
-objeto.addEventListener("click", () => {
-	// Envia uma mensagem para o background para abrir o popup ou ativar uma funcionalidade
-	chrome.runtime.sendMessage({ action: "abrirPopup" });
-});
+document.addEventListener('click', function(e) {
+	// Verifica se o alvo do clique ou algum de seus ancestrais possui a classe 'ticketBorder'
+	if (e.target.closest('.ticketBorder')) {
+	  // Envia uma mensagem para o background script para abrir o painel lateral
+	  chrome.runtime.sendMessage({ action: "sidePanel" }, (response) => {
+		if (response && response.status === "success") {
+		  console.log("Painel lateral aberto com sucesso!");
+		} else {
+		  console.error("Erro ao abrir o painel lateral:", response ? response.message : "Sem resposta");
+		}
+	  });
+	}
+  });
+  

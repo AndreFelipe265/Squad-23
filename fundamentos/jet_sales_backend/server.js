@@ -11,11 +11,12 @@ const urlCONTATOS = 'https://crm.rdstation.com/api/v1/contacts?token=6709bdde827
 const urlEMPRESA = 'https://crm.rdstation.com/api/v1/organizations?token=6709bdde82747300196dadec'
 const urlNEGOCIAÇÃO = 'https://crm.rdstation.com/api/v1/deals?token=6709bdde82747300196dadec'
 
+//Token Rd station
 app.use(cors());
 app.use((req, res, next) => {
-  const token = req.headers['authorization'];
-  if (token) {
-    req.token = token.replace('Bearer ', ''); // Remove "Bearer" para obter apenas o token
+  const tokenRD = req.headers['authorization'];
+  if (tokenRD) {
+    req.tokenRD = tokenRD.replace('Bearer ', ''); 
   }
   next();
 });
@@ -60,7 +61,7 @@ app.get('/api/token/check', async (req, res) => {
   try {
     const response = await axios.get(urlTOKEN, {
       headers: {
-        'Authorization': `Bearer ${req.token}`,
+        'Authorization': `Bearer ${req.tokenRD}`,
         'Content-Type': 'application/json',
       }
     });
@@ -76,7 +77,7 @@ app.get('/api/contacts', async (req, res) => {
   try {
     const response = await axios.get(urlCONTATOS, {
       headers: {
-        'Authorization': `Bearer ${req.token}`,
+        'Authorization': `Bearer ${req.tokenRD}`,
         'Content-Type': 'application/json',
       }
     });
@@ -95,7 +96,26 @@ app.get('/api/organizations', async (req, res) => {
   try {
     const response = await axios.get(urlEMPRESA, {
       headers: {
-        'Authorization': `Bearer ${req.token}`,
+        'Authorization': `Bearer ${req.tokenRD}`,
+        'Content-Type': 'application/json',
+      }
+    });
+
+ 
+    res.json(response.data);
+  } catch (error) {
+    console.error('Erro ao fazer a requisição:', error.message);
+    res.status(500).json({ error: 'Erro ao buscar dados da API da RD Station' });
+  }
+});
+
+//NEGOCIAÇÃO
+
+app.get('/api/deals', async (req, res) => {
+  try {
+    const response = await axios.get(urlNEGOCIAÇÃO, {
+      headers: {
+        'Authorization': `Bearer ${req.tokenRD}`,
         'Content-Type': 'application/json',
       }
     });
@@ -110,23 +130,4 @@ app.get('/api/organizations', async (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
-});
-
-//NEGOCIAÇÃO
-
-app.get('/api/deals', async (req, res) => {
-  try {
-    const response = await axios.get(urlNEGOCIAÇÃO, {
-      headers: {
-        'Authorization': `Bearer ${req.token}`,
-        'Content-Type': 'application/json',
-      }
-    });
-
- 
-    res.json(response.data);
-  } catch (error) {
-    console.error('Erro ao fazer a requisição:', error.message);
-    res.status(500).json({ error: 'Erro ao buscar dados da API da RD Station' });
-  }
 });
