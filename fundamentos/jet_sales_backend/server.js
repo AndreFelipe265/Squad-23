@@ -13,6 +13,7 @@ const urlNEGOCIAÇÃO = 'https://crm.rdstation.com/api/v1/deals?token=6709bdde82
 
 //Token Rd station
 app.use(cors());
+app.use(express.json());
 app.use((req, res, next) => {
   const tokenRD = req.headers['authorization'];
   if (tokenRD) {
@@ -21,10 +22,14 @@ app.use((req, res, next) => {
   next();
 });
 
+
+let token_jetsales = ''
+
 // Rota para receber o tokenJetSales e fazer algo com ele
 app.post('/api/enviarToken', async (req, res) => {
   // Recupera o token enviado do frontend
-  const { tokenJetSlaes } = req.body;
+  const { token } = req.body;
+  token_jetsales = token
   
   if (!token) {
     return res.status(400).json({ status: 'error', message: 'Token não enviado!' });
@@ -36,7 +41,7 @@ app.get('/users',async (req, res)=>{
     const response = await fetch("https://chatapi.jetsalesbrasil.com/users/?pageNumber=1&hasMore=true", {
       headers: {
         "accept": "application/json, text/plain, */*",
-        "authorization": `Bearer ${req.body.tokenJetSlaes}` 
+        "authorization": `Bearer ${token_jetsales}` 
       },
       method: "GET"
     });
@@ -50,10 +55,10 @@ app.get('/users',async (req, res)=>{
 
 app.get('/ticket',async (req, res)=>{
   try {
-    const response = await fetch(`https://chatapi.jetsalesbrasil.com/tickets/${process.env.tokenJetSlaes}?id=${process.env.tokenJetSlaes}`, {
+    const response = await fetch(`https://chatapi.jetsalesbrasil.com/tickets/${process.env.JETSALES_ID}?id=${process.env.JETSALES_ID}`, {
       headers: {
         "accept": "application/json, text/plain, */*",
-        "authorization": `Bearer ${process.env.JETSALES_TOKEN}` 
+        "authorization": `Bearer ${token_jetsales}` 
       },
       method: "GET"
     });

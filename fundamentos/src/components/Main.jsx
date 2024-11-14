@@ -35,14 +35,6 @@ const Main = () => {
     localStorage.setItem('tokenRD', tokenRD);
     alert('Token da RD salvo com sucesso!');
   };
-
-  // Token JetSales
-  const tokenJatsales = localStorage.getItem('token');
-  if(tokenJatsales){
-    console.log(tokenJatsales);
-  } else {
-    console.log('Token não encontrado');
-  }
   
   //JETSALES
   useEffect(() => {

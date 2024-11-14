@@ -17,8 +17,11 @@ document.addEventListener('click', function(e) {
         chrome.runtime.sendMessage({ action: "sidePanel" }, (response) => {
             if (response && response.status === "success") {
 
-                const tokenJetSales = localStorage.getItem('token');
-				console.log(tokenJetSales)
+              //TOKEN JETSALES
+
+              let tokenJetSales = localStorage.getItem('token');
+              tokenJetSales = tokenJetSales.replace(/^"|"$/g, '');
+				      console.log(tokenJetSales)
                 
                 
                 if (tokenJetSales) {
