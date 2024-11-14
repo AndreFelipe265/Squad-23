@@ -11,6 +11,7 @@ const Main = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [ticket, setTicket] = useState([]);
+  const [tokenRD, setTokenRD] = useState(localStorage.getItem('tokenRD') || '');
   const [showInfo, setShowInfo] = useState({
     usuario: false,
     financeiro: false,
@@ -29,6 +30,12 @@ const Main = () => {
     }));
   };
 
+  // Salvar Token da RD
+  const handleTokenSubmit = () => {
+    localStorage.setItem('tokenRD', tokenRD);
+    alert('Token da RD salvo com sucesso!');
+  };
+  
   //JETSALES
   useEffect(() => {
     const fetchUsers = async () => {
@@ -70,10 +77,12 @@ const Main = () => {
 
   //TOKEN
   useEffect(() => {
+    const tokenRD = localStorage.getItem('tokenRD');
     fetch('http://localhost:5000/api/token/check', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${tokenRD}`
       }
     })
     .then(response => {
@@ -92,10 +101,36 @@ const Main = () => {
 
   //CONTATOS
   useEffect(() => {
+    const tokenRD = localStorage.getItem('tokenRD');
     fetch('http://localhost:5000/api/contacts', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${tokenRD}`
+      }
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Erro ao listar contatos: ' + response.statusText);
+        }
+        return response.json();
+      })
+      .then(data => {
+        setContacts(data.contacts || []); 
+      })
+      .catch(error => {
+        setError(error);
+      });
+  }, []);
+
+  //negociação
+  useEffect(() => {
+    const tokenRD = localStorage.getItem('tokenRD');
+    fetch('http://localhost:5000/api/contacts', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${tokenRD}`
       }
     })
       .then(response => {
@@ -114,10 +149,12 @@ const Main = () => {
 
   //EMPRESA
   useEffect(() => {
+    const tokenRD = localStorage.getItem('tokenRD');
     fetch('http://localhost:5000/api/organizations', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${tokenRD}`
       }
     })
       .then(response => {
@@ -191,6 +228,13 @@ const Main = () => {
           <div className='seções'>
             <h2>INFORMAÇÕES DO CLIENTE</h2>
             <p className='Informações'>NOME: {data.name}</p>
+
+            <p>NOME: {data.name}</p>
+            <p>TELEFONE:</p>
+            <p>ID: </p>
+            <p>EMAIL: </p>
+            <br />
+            <hr />
           </div>
         )}
 
@@ -218,8 +262,8 @@ const Main = () => {
         {activeSection === 'token' && (
           <div className="configurar_token">
             <h1>CONFIGURAR O TOKEN</h1>
-            <input type="text" placeholder="Digite seu token aqui" />
-            <input type="submit" value="Verificar" />
+            <input type="text" placeholder="Digite seu token aqui" value={tokenRD} onChange={(e) => setTokenRD(e.target.value)} />
+            <button onClick={handleTokenSubmit}>Verificar</button>
           </div>
         )}
       </div>

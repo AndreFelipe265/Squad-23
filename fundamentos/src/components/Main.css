@@ -128,8 +128,16 @@ li:hover .dropdown {
     color: white;
 }
 
+
 .configurar_token input[type="submit"] {
     background: linear-gradient(to right, #51C077, #35e378);
+
+.configurar_token button {
+    width: 100%; /* Largura completa */
+    padding: 10px; /* Maior padding para o botão */
+    background: linear-gradient(to right, #51C077, #35e378); /* Gradiente no botão */
+    border: none;
+
     color: white;
     cursor: pointer;
     transition: background 0.3s;
@@ -232,3 +240,4 @@ li:hover .dropdown {
   }
 
 
+}
