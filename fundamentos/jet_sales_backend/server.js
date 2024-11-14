@@ -22,18 +22,31 @@ app.use((req, res, next) => {
   next();
 });
 
-
+//TOKEN E TICKET JETSALES
 let token_jetsales = ''
+let ticket_jetsales = ''
 
-// Rota para receber o tokenJetSales e fazer algo com ele
 app.post('/api/enviarToken', async (req, res) => {
-  // Recupera o token enviado do frontend
+
   const { token } = req.body;
   token_jetsales = token
   
   if (!token) {
     return res.status(400).json({ status: 'error', message: 'Token não enviado!' });
   }})
+
+app.post('/api/enviarTicket', async (req, res) => {
+
+    const { ticket } = req.body;
+    ticket_jetsales = ticket
+    console.log("Ticket recebido no back-end:", ticket_jetsales);
+    
+    if (!ticket) {
+      return res.status(400).json({ status: 'error', message: 'Ticket não enviado!' });
+    }})
+
+
+
 
 //JETSAES
 app.get('/users',async (req, res)=>{
@@ -53,18 +66,20 @@ app.get('/users',async (req, res)=>{
 });
 
 
-app.get('/ticket',async (req, res)=>{
+app.get('/ticket', async (req, res) => {
   try {
-    const response = await fetch(`https://chatapi.jetsalesbrasil.com/tickets/${process.env.JETSALES_ID}?id=${process.env.JETSALES_ID}`, {
+    const response = await fetch(`https://chatapi.jetsalesbrasil.com/tickets/${ticket_jetsales}?id=${ticket_jetsales}`, {
       headers: {
         "accept": "application/json, text/plain, */*",
         "authorization": `Bearer ${token_jetsales}` 
       },
       method: "GET"
     });
-    const data = await response.json()
+    const data = await response.json();
+    console.log("Dados do ticket recebidos da API:", data); // Exibe a resposta da API de Jetsales
     res.json(data);
   } catch (error) {
+    console.error("Erro ao buscar dados da API da JETSALES:", error);
     res.status(500).json({ error: 'Erro ao buscar dados da API da JETSALES' });
   }
 });

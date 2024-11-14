@@ -22,6 +22,20 @@ document.addEventListener('click', function(e) {
               let tokenJetSales = localStorage.getItem('token');
               tokenJetSales = tokenJetSales.replace(/^"|"$/g, '');
 				      console.log(tokenJetSales)
+
+              //TICKET JETSALES
+              const currentUrl = window.location.href;
+
+              const regex = /atendimento\/(\d+)/;
+              const match = currentUrl.match(regex);
+
+              if (match && match[1]) {
+                const ticketId = match[1];
+                console.log('Ticket ID:', ticketId); 
+              } else {
+                console.log('Ticket ID não encontrado');
+              }
+
                 
                 
                 if (tokenJetSales) {
@@ -41,6 +55,21 @@ document.addEventListener('click', function(e) {
                     .catch(error => {
                     });
                 }
+
+                fetch('http://localhost:5000/api/enviarTicket', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                      ticket: ticketId
+                  })
+              })
+              .then(response => response.json()) 
+              .then(data => {
+              })
+              .catch(error => {
+              });
             }
         });
     }

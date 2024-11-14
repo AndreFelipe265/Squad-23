@@ -9,7 +9,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 console.error("Erro ao abrir o painel lateral:", error);
                 sendResponse({ status: "error", message: error.message });
             });
-        return true; // Necessário para permitir a resposta assíncrona
+        return true; 
     } else {
         sendResponse({ status: "error", message: "Ação desconhecida" });
     }
