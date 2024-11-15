@@ -11,11 +11,12 @@ const Main = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [ticket, setTicket] = useState([]);
+  const [tokenRD, setTokenRD] = useState(localStorage.getItem('tokenRD') || '');
   const [showInfo, setShowInfo] = useState({
     usuario: false,
-    financeiro: false,
-    vendas: false,
-    marketing: false,
+    contatos: false,
+    empresa: false,
+    negociação: false,
   }); // Novo estado para controle dos checkboxes de cada seção
 
   const toggleDropdown = () => {
@@ -29,6 +30,12 @@ const Main = () => {
     }));
   };
 
+  // Salvar Token da RD
+  const handleTokenSubmit = () => {
+    localStorage.setItem('tokenRD', tokenRD);
+    alert('Token da RD salvo com sucesso!');
+  };
+  
   //JETSALES
   useEffect(() => {
     const fetchUsers = async () => {
@@ -70,10 +77,12 @@ const Main = () => {
 
   //TOKEN
   useEffect(() => {
+    const tokenRD = localStorage.getItem('tokenRD');
     fetch('http://localhost:5000/api/token/check', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${tokenRD}`
       }
     })
     .then(response => {
@@ -92,10 +101,36 @@ const Main = () => {
 
   //CONTATOS
   useEffect(() => {
+    const tokenRD = localStorage.getItem('tokenRD');
     fetch('http://localhost:5000/api/contacts', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${tokenRD}`
+      }
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Erro ao listar contatos: ' + response.statusText);
+        }
+        return response.json();
+      })
+      .then(data => {
+        setContacts(data.contacts || []); 
+      })
+      .catch(error => {
+        setError(error);
+      });
+  }, []);
+
+  //negociação
+  useEffect(() => {
+    const tokenRD = localStorage.getItem('tokenRD');
+    fetch('http://localhost:5000/api/contacts', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${tokenRD}`
       }
     })
       .then(response => {
@@ -114,10 +149,12 @@ const Main = () => {
 
   //EMPRESA
   useEffect(() => {
+    const tokenRD = localStorage.getItem('tokenRD');
     fetch('http://localhost:5000/api/organizations', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${tokenRD}`
       }
     })
       .then(response => {
@@ -143,13 +180,14 @@ const Main = () => {
     return <div>Carregando...</div>;
   }
 
+
   //PROGRAMAÇÃO
   return (
     <div>
       <nav>
         <ul className="menu">
           <li className="menu-item">
-            <button className="hover-botões" onClick={toggleDropdown}>INFORMAÇÕES</button>
+            <button onClick={toggleDropdown}>INFORMAÇÕES</button>
             {isDropdownOpen && (
               <ul className="dropdown">
                 <li>
@@ -160,27 +198,27 @@ const Main = () => {
                 </li>
                 <li>
                   <label>
-                    <input type="checkbox" checked={showInfo.financeiro} onChange={() => handleCheckboxChange('financeiro')} />
-                    Financeiro
+                    <input type="checkbox" checked={showInfo.contatos} onChange={() => handleCheckboxChange('contatos')} />
+                    Contatos
                   </label>
                 </li>
                 <li>
                   <label>
-                    <input type="checkbox" checked={showInfo.vendas} onChange={() => handleCheckboxChange('vendas')} />
-                    Vendas
+                    <input type="checkbox" checked={showInfo.empresa} onChange={() => handleCheckboxChange('empresa')} />
+                    Empresa
                   </label>
                 </li>
                 <li>
                   <label>
-                    <input type="checkbox" checked={showInfo.marketing} onChange={() => handleCheckboxChange('marketing')} />
-                    Marketing
+                    <input type="checkbox" checked={showInfo.negociação} onChange={() => handleCheckboxChange('negociação')} />
+                    Negociação
                   </label>
                 </li>
               </ul>
             )}
           </li>
           <li className="menu-item">
-            <button className="hover-botões" onClick={() => { setActiveSection('token'); setIsDropdownOpen(false); }}>TOKEN</button>
+            <button onClick={() => { setActiveSection('token'); setIsDropdownOpen(false); }}>TOKEN</button>
           </li>
         </ul>
       </nav>
@@ -188,38 +226,50 @@ const Main = () => {
       {/* Exibição condicional das seções */}
       <div className="content">
         {showInfo.usuario && (
-          <div className='seções'>
+          <div>
             <h2>INFORMAÇÕES DO CLIENTE</h2>
-            <p className='Informações'>NOME: {data.name}</p>
+            <p>NOME: {data.name}</p>
+            <p>TELEFONE:</p>
+            <p>ID: </p>
+            <p>EMAIL: </p>
+            <br />
+            <hr />
           </div>
         )}
 
-        {showInfo.financeiro && (
-          <div className='seções'>
-            <h2>SEÇÃO FINANCEIRO</h2>
-            <p className='Informações'>Informações financeiras.</p>
+        {showInfo.contatos && (
+          <div>
+            <h2>INFORMAÇÕES DE CONTATOS</h2>
+            <p></p>
+            <br />
+            <hr />
+
           </div>
         )}
 
-        {showInfo.vendas && (
-          <div className='seções'>
-            <h2>SEÇÃO VENDAS</h2>
-            <p className='Informações'>Informações sobre vendas.</p>
+        {showInfo.empresa && (
+          <div>
+            <h2>INFORMAÇÕES DE EMPRESA</h2>
+            <p></p>
+            <br />
+            <hr />
           </div>
         )}
 
-        {showInfo.marketing && (
-          <div className='seções'>
-            <h2>SEÇÃO MARKETING</h2>
-            <p className='Informações'>Estratégias de marketing.</p>
+        {showInfo.negociação && (
+          <div>
+            <h2>INFORMAÇÕES DE NEGOCIAÇÃO</h2>
+            <p></p>
+            <br />
+            <hr />
           </div>
         )}
 
         {activeSection === 'token' && (
           <div className="configurar_token">
             <h1>CONFIGURAR O TOKEN</h1>
-            <input type="text" placeholder="Digite seu token aqui" />
-            <input type="submit" value="Verificar" />
+            <input type="text" placeholder="Digite seu token aqui" value={tokenRD} onChange={(e) => setTokenRD(e.target.value)} />
+            <button onClick={handleTokenSubmit}>Verificar</button>
           </div>
         )}
       </div>

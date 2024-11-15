@@ -16,18 +16,14 @@ main > h1{
     font-size: 16px;
 }
 
-nav{
-    background: linear-gradient(to bottom, #51C077, #35e378);
-}
-
-h1{
+h1 + p {
     color: white;
 } 
 
-p{
+
+.content{
     color: white;
 }
-
 
 .dropdown {  
     display: none; /* Oculta o dropdown por padrão */  
@@ -76,17 +72,12 @@ li:hover .dropdown {
 .menu-item button {
     width: 100%; /* Faz o botão ocupar toda a largura do item */
     padding: 10px;
-    margin: none;
     background: linear-gradient(to bottom, #51C077, #35e378);
     color: white;
     border: 1px;
     border-radius: 5%;
     cursor: pointer;
     transition: background-color 0.3s ease;
-}
-
-.hover-botões:hover{
-    background: linear-gradient(to right, #59FFEE, #59FF80);
 }
 
 .menu-item button:hover {
@@ -111,40 +102,32 @@ li:hover .dropdown {
     color: #ffffff;
 }
 
-.configurar_token input[type="text"],
-.configurar_token input[type="submit"] {
-    width: 100%; /* Mesma largura para ambos */
-    padding: 10px;
-    font-size: 14px;
-    border-radius: 4px;
-    border: none;
-    outline: none;
-    box-sizing: border-box; /* Inclui padding e borda na largura total */
-}
-
 .configurar_token input[type="text"] {
-    margin-bottom: 20px;
+    width: 100%; /* Largura completa */
+    padding: 10px; /* Maior padding para o campo de entrada */
+    margin-bottom: 20px; /* Mais espaçamento abaixo do campo de entrada */
     background: #444;
     color: white;
+    border: none;
+    outline: none;
+    border-radius: 4px;
+    font-size: 14px; /* Tamanho de fonte ajustado */
 }
 
-.configurar_token input[type="submit"] {
-    background: linear-gradient(to right, #51C077, #35e378);
+.configurar_token button {
+    width: 100%; /* Largura completa */
+    padding: 10px; /* Maior padding para o botão */
+    background: linear-gradient(to right, #51C077, #35e378); /* Gradiente no botão */
+    border: none;
     color: white;
+    font-size: 14px; /* Tamanho da fonte ajustado */
     cursor: pointer;
+    border-radius: 4px;
     transition: background 0.3s;
 }
 
-
 .configurar_token input[type="submit"]:hover {
-    color: #ffffff; /* Cor inicial do texto */
-    transition: text-shadow 0.1s ease; /* Transição suave do efeito */
-    text-shadow: 0 0 5px #ffffff, /* Efeito de brilho branco */
-                 0 0 10px #ffffff,
-                 0 0 15px #ff00ff, /* Pode adicionar várias camadas com diferentes cores */
-                 0 0 20px #ff00ff,
-                 0 0 25px #ff00ff,
-                 0 0 30px #ff00ff
+    background: #369b78; /* Cor do botão no hover */
 }
 
 /* Estilos gerais do dropdown */
@@ -217,18 +200,4 @@ li:hover .dropdown {
     outline: none;
     box-shadow: 0 0 5px rgba(255, 255, 255, 0.6);
   }
-
-
-.seções{
-    width: 250px; /* Largura ajustada para a caixa */
-    padding: 35px; /* Padding para espaçamento interno */
-    margin: 0 auto;
-    margin-top: 5%; /* Centraliza verticalmente */
-    background: #333;
-    border-radius: 8px;
-    text-align: center;
-    color: white;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-  }
-
-
+  
