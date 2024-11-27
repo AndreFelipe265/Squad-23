@@ -1,203 +1,185 @@
-@charset "UTF-8";
-
-
-*{
-    padding: 0px;
-    margin: 0px;
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-main{
-    background-color: rgb(29, 28, 28);
-    color: white;
-    height: 400px;
+/* Corpo da página */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4; /* Cor de fundo suave */
+    color: #1d1c1c;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh; /* Garante que ocupa a altura total da tela */
+    overflow: hidden; /* Evita scroll desnecessário */
 }
 
-main > h1{
-    font-size: 16px;
-}
-
-h1 + p {
-    color: white;
-} 
-
-
-.content{
-    color: white;
-}
-
-.dropdown {  
-    display: none; /* Oculta o dropdown por padrão */  
-    position: absolute; /* Para posicionar corretamente */  
-    background: white; /* Fundo branco para o dropdown */ 
-    color: black; 
-    border: none;
-    z-index: 1000; /* Certifique-se de que o dropdown está acima de outros elementos */  
-    list-style: none;  
-    padding: 0;  
-    margin: 0; /* Remove margens padrão para evitar espaço extra */  
-}  
-
-/* Exibe o dropdown quando o mouse está sobre o item do menu */
-li:hover .dropdown {  
-    display: block; /* Exibe o dropdown ao passar o mouse */  
-}  
-
-.dropdown li {  
-    border: 1px solid black;
-    padding: 8px 12px; /* Espaçamento para os itens do dropdown */  
-    cursor: pointer; /* Indica que os itens são clicáveis */  
-    transition: background-color 0.3s ease; /* Transição suave para a cor de fundo */  
-}  
-
-.dropdown li:hover {  
-    background-color: rgba(0, 0, 0, 0.1); /* Efeito de hover para os itens do dropdown */  
-
+/* Cabeçalho e navegação */
+nav {
+    background: #1d1c1c;
+    padding: 15px 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .menu {
     display: flex;
     justify-content: center;
-    gap: 10px; /* Espaçamento entre os botões */
-}
-
-.menu-item {
-    flex: 1; /* Faz com que cada botão ocupe igualmente o espaço disponível */
-    
-}
-
-.menu-item > button{
-    font-weight: bold;
+    gap: 15px;
 }
 
 .menu-item button {
-    width: 100%; /* Faz o botão ocupar toda a largura do item */
-    padding: 10px;
-    background: linear-gradient(to bottom, #51C077, #35e378);
-    color: white;
-    border: 1px;
-    border-radius: 5%;
+    padding: 12px 20px;
+    font-size: 16px;
+    color: #fff;
+    background: linear-gradient(to right, #15ce5c, #1f944c);
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(34, 109, 109, 0.2);
 }
 
 .menu-item button:hover {
-    background-color: #555;
+    background: linear-gradient(to right, #0b9952, #067c41);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px #333;
 }
 
-.configurar_token {
-    width: 250px; /* Largura ajustada para a caixa */
-    padding: 30px; /* Padding para espaçamento interno */
-    margin: 0 auto;
-    margin-top: 10%; /* Centraliza verticalmente */
-    background: #333;
-    border-radius: 8px;
-    text-align: center;
-    color: white;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-}
-
-.configurar_token h1 {
-    margin-bottom: 15px; /* Menos espaçamento abaixo do título */
-    font-size: 18px; /* Tamanho de fonte ajustado */
-    color: #ffffff;
-}
-
-.configurar_token input[type="text"] {
-    width: 100%; /* Largura completa */
-    padding: 10px; /* Maior padding para o campo de entrada */
-    margin-bottom: 20px; /* Mais espaçamento abaixo do campo de entrada */
-    background: #444;
-    color: white;
-    border: none;
-    outline: none;
-    border-radius: 4px;
-    font-size: 14px; /* Tamanho de fonte ajustado */
-}
-
-.configurar_token button {
-    width: 100%; /* Largura completa */
-    padding: 10px; /* Maior padding para o botão */
-    background: linear-gradient(to right, #51C077, #35e378); /* Gradiente no botão */
-    border: none;
-    color: white;
-    font-size: 14px; /* Tamanho da fonte ajustado */
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background 0.3s;
-}
-
-.configurar_token input[type="submit"]:hover {
-    background: #369b78; /* Cor do botão no hover */
-}
-
-/* Estilos gerais do dropdown */
+/* Dropdown */
 .dropdown {
     list-style: none;
-    padding: 0;
-    margin: 0;
-    background-color: #333;
-    border-radius: 8px;
+    position: absolute;
+    background: #fff;
+    color: #333;
+    width: 200px;
+    border-radius: 5px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    width: 250px;
-    position: absolute;
-    z-index: 1000;
-  }
-  
-  /* Itens de lista dentro do dropdown */
-  .dropdown li {
+    margin-top: 5px;
+    padding: 10px 0;
+    display: none; /* Ocultar por padrão */
+}
+
+.menu-item:hover .dropdown {
+    display: block;
+}
+
+.dropdown li {
     padding: 10px 15px;
-    border-bottom: 1px solid #444;
-  }
-  
-  /* Estilo para os rótulos das checkboxes */
-  .dropdown li label {
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-    color: white;
+    font-size: 14px;
     cursor: pointer;
-    user-select: none;
-  }
-  
-  /* Estilos para as checkboxes */
-  .dropdown input[type="checkbox"] {
-    margin-right: 10px;
-    width: 18px;
-    height: 18px;
+    transition: all 0.2s ease;
+}
+
+.dropdown li:hover {
+    background: #f1f1f1;
+    color: #007bff;
+}
+
+.dropdown input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+/* Seções de conteúdo */
+.content {
+    padding: 20px;
+    background: #1d1c1c;
+    margin: 20px auto;
+    border-radius: 8px;
+    max-width: 800px;
+}
+
+.content h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #00ff80;
+    border-bottom: 2px solid #00ff80;
+    padding-bottom: 10px;
+}
+
+/* Informações detalhadas */
+.content div {
+    margin-bottom: 20px;
+    border: 1px solid #313131;
+    padding: 15px;
+    border-radius: 5px;
+    background: #f9f9f9;
+}
+
+.content p {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.content p strong {
+    color: #00ff80;
+}
+
+/* Botão de ações */
+.configurar_token button {
+    padding: 12px 20px;
+    background: linear-gradient(to right, #28a745, #218838);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
-    border-radius: 4px;
-    background-color: #444;
-    border: 2px solid #555;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
-  }
-  
-  /* Checkbox marcada */
-  .dropdown input[type="checkbox"]:checked {
-    background-color: #4CAF50;
-    border-color: #4CAF50;
-  }
-  
-  /* Efeito de transição suave quando a checkbox é marcada/desmarcada */
-  .dropdown input[type="checkbox"]:checked::after {
-    content: '';
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: white;
-    transition: background-color 0.3s;
-  }
-  
-  /* Efeito de hover nos itens da lista */
-  .dropdown li:hover {
-    background-color: #555;
-  }
-  
-  /* Efeito de foco para checkboxes */
-  .dropdown input[type="checkbox"]:focus {
+    font-size: 14px;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.configurar_token button:hover {
+    background: linear-gradient(to right, #218838, #1e7e34);
+    transform: scale(1.05);
+}
+
+/* Token box */
+.configurar_token {
+    width: 350px;
+    background: #000; /* Fundo preto */
+    margin: auto;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Remove bordas ou espaçamento adicionais */
+.configurar_token input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 0; /* Remove espaçamento */
+    border: none; /* Remove bordas visíveis */
+    background: transparent; /* Garante que não tenha fundo */
+    font-size: 14px;
+}
+
+.configurar_token input[type="text"]:focus {
+    border-color: #00ff80;
+    box-shadow: 0 0 5px rgba(10, 173, 152, 0.3);
     outline: none;
-    box-shadow: 0 0 5px rgba(255, 255, 255, 0.6);
-  }
-  
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .menu {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .menu-item button {
+        width: 100%;
+    }
+
+    .content {
+        padding: 15px;
+        margin: 10px;
+    }
+
+    .configurar_token {
+        width: 90%;
+        padding: 15px;
+    }
+}

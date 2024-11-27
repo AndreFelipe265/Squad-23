@@ -6,11 +6,12 @@ const Main = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false); 
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
-  const [contacts, setContacts] = useState([]);
-  const [organizations, setOrganizations] = useState([]);
-  const [users, setUsers] = useState([]);
+  const [contacts, setContacts] = useState(null);
+  const [organizations, setOrganizations] = useState(null);
+  const [users, setUsers] = useState(null);
+  const [deal, setDeal] = useState(null)
   const [loading, setLoading] = useState(true);
-  const [ticket, setTicket] = useState([]);
+  const [ticket, setTicket] = useState(null);
   const [tokenRD, setTokenRD] = useState(localStorage.getItem('tokenRD') || '');
   const [showInfo, setShowInfo] = useState({
     usuario: false,
@@ -21,6 +22,10 @@ const Main = () => {
 
   const toggleDropdown = () => {
     setIsDropdownOpen((prev) => !prev);
+  };
+
+  const toggleExpansion = () => {
+    setIsExpanded(!isExpanded);
   };
 
   const handleCheckboxChange = (section) => {
@@ -61,10 +66,10 @@ const Main = () => {
       try {
         const response = await fetch('http://localhost:5000/ticket');
         if (!response.ok) {
-          throw new Error('Erro ao buscar usuários');
+          throw new Error('Erro ao buscar ticket');
         }
         const data = await response.json();
-        setTicket(data.ticket);
+        setTicket(data);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -126,7 +131,7 @@ const Main = () => {
   //negociação
   useEffect(() => {
     const tokenRD = localStorage.getItem('tokenRD');
-    fetch('http://localhost:5000/api/contacts', {
+    fetch('http://localhost:5000/api/deals', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -140,7 +145,7 @@ const Main = () => {
         return response.json();
       })
       .then(data => {
-        setContacts(data.contacts || []); 
+        setDeal(data.deals || []); 
       })
       .catch(error => {
         setError(error);
@@ -183,7 +188,14 @@ const Main = () => {
 
   //PROGRAMAÇÃO
   return (
-    <div>
+    <div className='TICKET_ID'>
+      {ticket && (
+        <div key={ticket.id} className='USER_ID'>
+          <p>USER ID: {ticket.user.id}</p>
+          {/* Renderize outras informações do ticket aqui */}
+        </div>
+      )}
+  
       <nav>
         <ul className="menu">
           <li className="menu-item">
@@ -222,49 +234,62 @@ const Main = () => {
           </li>
         </ul>
       </nav>
-
-      {/* Exibição condicional das seções */}
+  
       <div className="content">
-        {showInfo.usuario && (
+        {showInfo.usuario && ticket && (
           <div>
-            <h2>INFORMAÇÕES DO CLIENTE</h2>
-            <p>NOME: {data.name}</p>
-            <p>TELEFONE:</p>
-            <p>ID: </p>
-            <p>EMAIL: </p>
-            <br />
-            <hr />
+            <h2>Informações de Usuário</h2>
+            <div>
+              <p><strong>ID do Contato:</strong> {ticket.contact.id}</p>
+              <p><strong>Nome:</strong> {ticket.contact.name}</p>
+              <p><strong>Número:</strong> {ticket.contact.number}</p>
+              <p><strong>Canal:</strong> {ticket.contact.channel || 'Não informado'}</p>
+              <p><strong>Nome do contato:</strong> {ticket.contact.firstConnectionModel.name}</p>
+              <p><strong>Status:</strong> {ticket.contact.firstConnectionModel.status || 'Não informado'}</p>
+              <p><strong>Email:</strong> {ticket.contact.email || 'Não informado'}</p>
+            </div>
           </div>
         )}
-
-        {showInfo.contatos && (
+  
+        {showInfo.contatos && contacts && (
           <div>
             <h2>INFORMAÇÕES DE CONTATOS</h2>
-            <p></p>
-            <br />
-            <hr />
-
+            {contacts.map((contact) => (
+              <div key={contact.id}>
+                <p><strong>Nome:</strong> {contact.name}</p>
+                <p><strong>Email:</strong> {contact.email || 'Não informado'}</p>
+                <p><strong>Telefone:</strong> {contact.phone || 'Não informado'}</p>
+                <p><strong>Empresa:</strong> {contact.company || 'Não informado'}</p>
+              </div>
+            ))}
           </div>
         )}
-
-        {showInfo.empresa && (
+  
+        {showInfo.empresa && organizations && (
           <div>
-            <h2>INFORMAÇÕES DE EMPRESA</h2>
-            <p></p>
-            <br />
-            <hr />
+            <h2>INFORMAÇÕES DA EMPRESA</h2>
+            {organizations.map((org) => (
+              <div key={org.id}>
+                <p><strong>Nome:</strong> {org.name}</p>
+                <p><strong>Website:</strong> {org.website || 'Não informado'}</p>
+                <p><strong>Email:</strong> {org.email || 'Não informado'}</p>
+                <p><strong>Telefone:</strong> {org.phone || 'Não informado'}</p>
+              </div>
+            ))}
           </div>
         )}
-
-        {showInfo.negociação && (
-          <div>
+  
+        {showInfo.negociação && deal && deal.map((d) => (
+          <div key={d.id}>
             <h2>INFORMAÇÕES DE NEGOCIAÇÃO</h2>
-            <p></p>
-            <br />
+            <p>Título: {d.title}</p>
+            <p>Status: {d.status}</p>
+            <p>Valor: {d.value || 'Não informado'}</p>
+            <p>Responsável: {d.owner.name || 'Não informado'}</p>
             <hr />
           </div>
-        )}
-
+        ))}
+  
         {activeSection === 'token' && (
           <div className="configurar_token">
             <h1>CONFIGURAR O TOKEN</h1>
