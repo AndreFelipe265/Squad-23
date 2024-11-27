@@ -279,16 +279,20 @@ const Main = () => {
           </div>
         )}
   
-        {showInfo.negociação && deal && deal.map((d) => (
-          <div key={d.id}>
-            <h2>INFORMAÇÕES DE NEGOCIAÇÃO</h2>
-            <p>Título: {d.title}</p>
-            <p>Status: {d.status}</p>
-            <p>Valor: {d.value || 'Não informado'}</p>
-            <p>Responsável: {d.owner.name || 'Não informado'}</p>
-            <hr />
-          </div>
-        ))}
+        {showInfo.negociação && deal && (
+        <div>
+          <h2>INFORMAÇÕES DE NEGOCIAÇÃO</h2>
+          {deal.map((d) => (
+            <div key={d.id}>
+              <p><strong>ID do Deal:</strong> {d.id || 'Não informado'}</p>
+              <p><strong>Título:</strong> {d.name || 'Não informado'}</p>
+              <p><strong>Valor:</strong> {d.value || 'Não informado'}</p>
+              <p><strong>Status:</strong> {d.status || 'Não informado'}</p>
+              <hr />
+            </div>
+          ))}
+        </div>
+      )}
   
         {activeSection === 'token' && (
           <div className="configurar_token">

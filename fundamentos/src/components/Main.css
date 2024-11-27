@@ -45,7 +45,6 @@ nav {
 
 .menu-item button:hover {
     background: linear-gradient(to right, #0b9952, #067c41);
-    transform: translateY(-2px);
     box-shadow: 0 6px 12px #333;
 }
 
@@ -71,7 +70,6 @@ nav {
     padding: 10px 15px;
     font-size: 14px;
     cursor: pointer;
-    transition: all 0.2s ease;
 }
 
 .dropdown li:hover {
@@ -103,10 +101,12 @@ nav {
 /* Informações detalhadas */
 .content div {
     margin-bottom: 20px;
-    border: 1px solid #313131;
+    border: 1px solid #fff8f8;
     padding: 15px;
+    color: white;
+    font-weight: bold;
     border-radius: 5px;
-    background: #f9f9f9;
+    background: #414040;
 }
 
 .content p {
@@ -120,6 +120,7 @@ nav {
 
 /* Botão de ações */
 .configurar_token button {
+    margin-top: 5px;
     padding: 12px 20px;
     background: linear-gradient(to right, #28a745, #218838);
     color: #fff;
@@ -138,7 +139,7 @@ nav {
 /* Token box */
 .configurar_token {
     width: 350px;
-    background: #000; /* Fundo preto */
+    background: #292828; /* Fundo preto */
     margin: auto;
     padding: 20px;
     border-radius: 8px;
@@ -151,7 +152,9 @@ nav {
     width: 100%;
     padding: 10px;
     margin-bottom: 0; /* Remove espaçamento */
-    border: none; /* Remove bordas visíveis */
+    border: 1px solid white;
+    color: white;
+    border-radius: 10px; /* Remove bordas visíveis */
     background: transparent; /* Garante que não tenha fundo */
     font-size: 14px;
 }
@@ -160,6 +163,12 @@ nav {
     border-color: #00ff80;
     box-shadow: 0 0 5px rgba(10, 173, 152, 0.3);
     outline: none;
+}
+
+.USER_ID{
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 /* Responsividade */
